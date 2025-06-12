@@ -36,6 +36,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hippo.easyrecyclerview.EasyRecyclerView;
+import com.hippo.easyrecyclerview.LayoutManagerUtils;
 import com.hippo.easyrecyclerview.MarginItemDecoration;
 import com.hippo.ehviewer.EhApplication;
 import com.hippo.ehviewer.R;
@@ -58,7 +59,6 @@ import com.hippo.widget.recyclerview.AutoGridLayoutManager;
 import com.hippo.lib.yorozuya.AssertUtils;
 import com.hippo.lib.yorozuya.LayoutUtils;
 import com.hippo.lib.yorozuya.ViewUtils;
-import com.hippo.easyrecyclerview.LayoutManagerUtils;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.greenrobot.eventbus.EventBus;
