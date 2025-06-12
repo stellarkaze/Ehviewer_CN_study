@@ -63,11 +63,14 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class GalleryPreviewsScene extends ToolbarScene implements EasyRecyclerView.OnItemClickListener {
 
     public static final String KEY_GALLERY_INFO = "gallery_info";
+    /** Start page scroll target */
+    public static final String KEY_INITIAL_PAGE = "initial_page";
     private final static String KEY_HAS_FIRST_REFRESH = "has_first_refresh";
 
     /*---------------
@@ -89,6 +92,8 @@ public class GalleryPreviewsScene extends ToolbarScene implements EasyRecyclerVi
     private GalleryPreviewHelper mHelper;
 
     private boolean mHasFirstRefresh = false;
+    private int mInitialPage = -1;
+    private boolean mDidInitialScroll = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,6 +117,7 @@ public class GalleryPreviewsScene extends ToolbarScene implements EasyRecyclerVi
         }
 
         mGalleryInfo = args.getParcelable(KEY_GALLERY_INFO);
+        mInitialPage = args.getInt(KEY_INITIAL_PAGE, -1);
     }
 
     private void onRestore(@NonNull Bundle savedInstanceState) {
@@ -386,6 +392,19 @@ public class GalleryPreviewsScene extends ToolbarScene implements EasyRecyclerVi
             }
 
             mHelper.onGetPageData(taskId, result.second, 0, list);
+
+            if (!mDidInitialScroll && mInitialPage >= 0) {
+                List<GalleryPreview> data = mHelper.getData();
+                for (int i = 0, n = data.size(); i < n; i++) {
+                    if (data.get(i).getPosition() == mInitialPage) {
+                        if (mRecyclerView != null) {
+                            mRecyclerView.scrollToPosition(i);
+                            mDidInitialScroll = true;
+                        }
+                        break;
+                    }
+                }
+            }
         }
     }
 
