@@ -58,6 +58,7 @@ import com.hippo.widget.recyclerview.AutoGridLayoutManager;
 import com.hippo.lib.yorozuya.AssertUtils;
 import com.hippo.lib.yorozuya.LayoutUtils;
 import com.hippo.lib.yorozuya.ViewUtils;
+import com.hippo.easyrecyclerview.LayoutManagerUtils;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.greenrobot.eventbus.EventBus;
@@ -398,7 +399,8 @@ public class GalleryPreviewsScene extends ToolbarScene implements EasyRecyclerVi
                 for (int i = 0, n = data.size(); i < n; i++) {
                     if (data.get(i).getPosition() == mInitialPage) {
                         if (mRecyclerView != null) {
-                            mRecyclerView.scrollToPosition(i);
+                            LayoutManagerUtils.scrollToPositionWithOffset(
+                                    mRecyclerView.getLayoutManager(), i, 0);
                             mDidInitialScroll = true;
                         }
                         break;
