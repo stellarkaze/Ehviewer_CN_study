@@ -1527,6 +1527,11 @@ public class GalleryDetailScene extends BaseScene implements View.OnClickListene
             if (null != mGalleryDetail) {
                 Bundle args = new Bundle();
                 args.putParcelable(GalleryPreviewsScene.KEY_GALLERY_INFO, mGalleryDetail);
+                if (mGalleryDetail.pages > 20) {
+                    // Skip the first 20 thumbnails already displayed on the
+                    // gallery info page and start from page 21
+                    args.putInt(GalleryPreviewsScene.KEY_INITIAL_PAGE, 20);
+                }
                 startScene(new Announcer(GalleryPreviewsScene.class).setArgs(args));
             }
         } else if (mTitle == v) {
